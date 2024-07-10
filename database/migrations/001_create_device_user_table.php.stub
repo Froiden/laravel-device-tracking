@@ -13,19 +13,21 @@ class CreateDeviceUserTable extends Migration
      */
     public function up()
     {
+        $deviceTableName = config('laravel-device-tracking.device_table');
         Schema::create('device_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index();
-            
-            $table->foreignId('device_id')->index()
-                ->constrained('devices')
-                ->cascadeOnDelete();
 
+            $table->foreignId('device_id')->index()
+                ->constrained($deviceTableName)
+                ->cascadeOnDelete();
             $table->index(['user_id','device_id']);
-            
             $table->string('name')->nullable();
             $table->timestamp('verified_at')->nullable();
-
+            $table->timestamp('reported_as_rogue_at')->nullable()->index();
+            $table->text('note')->nullable();
+            $table->text('admin_note')->nullable();
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }

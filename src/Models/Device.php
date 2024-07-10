@@ -50,7 +50,11 @@ class Device extends Model
     use SoftDeletes;
     protected static $class;
 
-
+    public function getTable()
+    {
+        return config('laravel-device-tracking.device_table');
+    }
+    
     protected $hidden = [
         'device_uuid',
         'admin_note',

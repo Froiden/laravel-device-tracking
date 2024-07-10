@@ -13,16 +13,17 @@ class CreateDevicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('devices', function (Blueprint $table) {
+        $tableName = config('laravel-device-tracking.device_table');
+        Schema::create($tableName, function (Blueprint $table) {
             $table->id();
             $table->string('device_uuid')->unique();
             $table->string('device_type')->index();
             $table->string('ip',40)->index();
 
             $table->timestamp('device_hijacked_at')->nullable();
-            
-            $table->json('data',60)->nullable();
 
+            $table->json('data',60)->nullable();
+            $table->boolean('is_rogue_device')->default(false)->index();
             $table->softDeletes();
             $table->timestamps();
         });

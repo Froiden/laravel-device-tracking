@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|DeviceUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DeviceUser whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DeviceUser whereVerifiedAt($value)
- * 
+ *
  * @mixin \Eloquent
  */
 class DeviceUser extends Pivot
@@ -53,7 +53,7 @@ class DeviceUser extends Pivot
 
     public function device()
     {
-        return $this->belongsTo(Device::class);
+        return $this->belongsTo(Device::class, 'device_id');
     }
     public function user()
     {
