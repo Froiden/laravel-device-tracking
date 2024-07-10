@@ -22,7 +22,7 @@ You can install the package via composer:
 
 ```bash
 
-composer require ivanomatteo/laravel-device-tracking
+composer require shrikant190890/device-tracking
 
 ```
 
