@@ -7,6 +7,8 @@ return [
     // if user_model is null, will be probed: App\Model\User and then App\User
     'user_model' => null,
 
+    'device_table' => 'track_devices',
+
     'detect_on_login' => true,
 
     'geoip_provider' => null, // must implement: IvanoMatteo\LaravelDeviceTracking\GeoIpProvider
