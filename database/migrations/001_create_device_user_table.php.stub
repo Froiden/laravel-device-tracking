@@ -16,7 +16,7 @@ class CreateDeviceUserTable extends Migration
         $deviceTableName = config('laravel-device-tracking.device_table');
         $fieldName = config('laravel-device-tracking.model_relation_id');
 
-        Schema::create('device_user', function (Blueprint $table) {
+        Schema::create('device_user', function (Blueprint $table) use($deviceTableName, $fieldName) {
             $table->id();
             $table->foreignId($fieldName)->index();
 
