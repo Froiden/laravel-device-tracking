@@ -54,7 +54,7 @@ class Device extends Model
     {
         return config('laravel-device-tracking.device_table');
     }
-    
+
     protected $hidden = [
         'device_uuid',
         'admin_note',
@@ -117,14 +117,17 @@ class Device extends Model
 
     public function currentUserStatus()
     {
+        $fieldName = config('laravel-device-tracking.model_relation_id');
+
         return $this->hasOne(DeviceUser::class)
-            ->where('user_id', '=', optional(Auth::user())->id);
+            ->where($fieldName, '=', optional(Auth::user())->id);
     }
 
     public function isUsedBy($user_id)
     {
+        $fieldName = config('laravel-device-tracking.model_relation_id');
         return $this->user()
-            ->where('device_user.user_id', $user_id)->exists();
+            ->where('device_user.'.$fieldName, $user_id)->exists();
     }
 
     public function isCurrentUserAttached()
