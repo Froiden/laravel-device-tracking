@@ -211,13 +211,17 @@ class LaravelDeviceTracking
 
     public function flagAsVerified(Device $device, $user_id, $name = null)
     {
+        $fieldName = config('laravel-device-tracking.model_relation_id');
+
         $device->pivot()
-            ->where('user_id', '=', $user_id)
+            ->where($fieldName, '=', $user_id)
             ->update(['verified_at' => now(), 'name' => $name]);
     }
     public function flagAsVerifiedByUuid($device_uuid, $user, $name = null)
     {
-        DeviceUser::where('user_id', '=', $user)
+        $fieldName = config('laravel-device-tracking.model_relation_id');
+
+        DeviceUser::where($fieldName, '=', $user)
             ->whereHas('device', function ($q) use ($device_uuid) {
                 $q->where('device_uuid', '=', $device_uuid);
             })
@@ -265,10 +269,11 @@ class LaravelDeviceTracking
         if (!$user_id) {
             return;
         }
+        $fieldName = config('laravel-device-tracking.model_relation_id');
 
         $device->pivot()
-            ->when($user_id !== 'all', function ($q) use ($user_id) {
-                $q->where('user_id', '=', $user_id);
+            ->when($user_id !== 'all', function ($q) use ($user_id, $fieldName) {
+                $q->where($fieldName, '=', $user_id);
             })
             ->update([
                 'verified_at' => now(),
